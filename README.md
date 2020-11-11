@@ -17,11 +17,13 @@ This repo contains a working mirror of the [Biden-Harris Transition Agency Revie
 
 ## Code and data
 
-See [wgetsnap.sh](wgetsnap.sh) to see the `wget` code for mirroring the page.
+See [wgetsnap.sh](wgetsnap.sh) to check out the `wget` code for mirroring the page.
 
 <a id="mark-scraped-results" name="mark-scraped-results"></a>
 
 ### Scraped results
+
+> **Caveat:** This repo's [scraped data](scrape/data.csv) is provided as-is, with absolutely no assurances or promises about its accuracy or integrity, so use it at your own risk! Of course, feel free to inspect and re-run the [scraper script](scrape/scraper.py) yourself.
 
 Because this mirrored page and its HTML tables have newsworthy information, I've added a scraper script – [scrape/scraper.py](./scrape/scraper.py) – which parses and extracts the tabular data from [docs/index.html](docs/index.html) and outputs it as CSV.
 
@@ -37,7 +39,18 @@ Or, if you'd like to see an interactive preview of the data on Google Sheets, [c
 ## Related links
 
 - @Transition46 tweet: https://twitter.com/Transition46/status/1326257434080522241
-- @alexkotch critiquing the announced teams: https://twitter.com/alexkotch/status/1326266162330669056
+- @alexkotch critiquing the Biden-Harris transition teams: https://twitter.com/alexkotch/status/1326266162330669056
+- Wayback snapshot of Donald Trump's agency landing teams page: https://web.archive.org/web/20161217040522/https://greatagain.gov/agency-landing-teams-54916f71f462
+
+As annoying as it is to have to scrape the Biden transition page to get data, it's a big improvement from the previous administration's agency teams page, which was basically a [Medium blog post](https://web.archive.org/web/20161217040522/https://greatagain.gov/agency-landing-teams-54916f71f462
+):
+
+
+<a href="https://web.archive.org/web/20161217040522/https://greatagain.gov/agency-landing-teams-54916f71f462
+">
+    <img src="assets/2016-page-screenshot.png" alt="2016-page-screenshot.png">
+</a>
+
 
 ## Developer notes
 
