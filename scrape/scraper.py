@@ -42,13 +42,13 @@ def parse_page(html: str) -> ListType[DictType]:
     for hed in doc.cssselect("h2"):
         agency = hed.text_content()
         for i, row in enumerate(hed.getnext().cssselect("tbody tr"), 1):
-            cells = row.cssselect("td")
+            cells = [r.text_content().strip() for r in row.cssselect("td")]
 
             d = {
                 "agency": agency,
-                "full_name": cells[0].text_content().replace(TEAM_LEAD_TXT, ""),
-                "recent_employment": cells[1].text_content(),
-                "funding_source": cells[2].text_content(),
+                "full_name": cells[0].replace(TEAM_LEAD_TXT, ""),
+                "recent_employment": cells[1],
+                "funding_source": cells[2],
                 "is_team_lead": True if i == 1 else False,
                 "row_index": i,
             }
