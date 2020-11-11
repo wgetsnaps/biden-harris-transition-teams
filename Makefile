@@ -1,10 +1,10 @@
-.PHONY: help clean serve
+.PHONY: help clean serve scrape
 .DEFAULT_GOAL := help
 
 
 # Loosely define the expected starting point of the mirrored site, locally speaking
 EXPECTED_MIRROR_INDEX_FILE = ./docs/index.html
-
+SCRAPED_DATA_FILE = ./scrape/data.csv
 
 
 # a bunch of code so that `make serve` can automatically pop open a browser at the expected index file
@@ -36,6 +36,7 @@ help:
 clean:
 	rm -fr docs/
 	rm -f wget.log
+	rm -f "$(SCRAPED_DATA_FILE)"
 
 docs/index.html:
 	./wgetsnap.sh
@@ -48,3 +49,5 @@ serve: $(EXPECTED_MIRROR_INDEX_FILE)
 	@sleep 0.3
 	$(BROWSER) $<
 
+scrape:
+	./scrape/scraper.py > $(SCRAPED_DATA_FILE)
