@@ -43,11 +43,10 @@ docs/index.html:
 
 snap: $(EXPECTED_MIRROR_INDEX_FILE)
 
-
 serve: $(EXPECTED_MIRROR_INDEX_FILE)
 	@echo "Opening $< in web browser..."
 	@sleep 0.3
 	$(BROWSER) $<
 
-scrape:
+scrape: $(EXPECTED_MIRROR_INDEX_FILE)
 	./scrape/scraper.py > $(SCRAPED_DATA_FILE)
