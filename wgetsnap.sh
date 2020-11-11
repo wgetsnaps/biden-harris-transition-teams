@@ -2,16 +2,19 @@
 
 # this script makes a local subdirectory named ./docs, which is where wget saves its work
 
-TARGET_URL=https://www.example.com/
+TARGET_URL=https://buildbackbetter.com/the-transition/agency-review-teams/
 
 wget "${TARGET_URL}" \
       --adjust-extension \
       --convert-links \
       --directory-prefix=./docs/ \
-      --include-directories 'STUFF/,MORE_STUFF/*' \
+      --mirror \
       --no-host-directories \
+      --no-directories \
       --output-file /dev/stdout \
+      --no-parent \
       --page-requisites \
-      --recursive --level 1 \
-      --span-hosts \
   | tee ./wget.log
+
+
+      # --include-directories 'STUFF/,MORE_STUFF/*' \
