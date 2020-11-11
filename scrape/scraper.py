@@ -9,7 +9,6 @@ Just a simple scraper that converts the index.html page's tables into CSV
 To interactively debug an exception:
 
     $ python -m pdb -c continue scrape/scraper.py
-
 """
 
 import csv
@@ -41,15 +40,15 @@ def parse_page(html: str) -> ListType[DictType]:
     doc = hparse(html)
 
     for hed in doc.cssselect("h2"):
-        agency = hed.text
+        agency = hed.text_content()
         for i, row in enumerate(hed.getnext().cssselect("tbody tr"), 1):
             cells = row.cssselect("td")
 
             d = {
                 "agency": agency,
-                "full_name": cells[0].text.replace(TEAM_LEAD_TXT, ""),
-                "recent_employment": cells[1].text,
-                "funding_source": cells[2].text,
+                "full_name": cells[0].text_content().replace(TEAM_LEAD_TXT, ""),
+                "recent_employment": cells[1].text_content(),
+                "funding_source": cells[2].text_content(),
                 "is_team_lead": True if i == 1 else False,
                 "row_index": i,
             }
