@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
 Just a simple scraper that converts the index.html page's tables into CSV
-- requires Python 3.5+
-- writes to stdout
-- run `make scrape` task to scrape and write to scrape/data.csv
+
+    - requires Python 3.5+
+    - writes to stdout
+    - run `make scrape` task to scrape and write to scrape/data.csv
 
 To interactively debug an exception:
 
-$ python -m pdb -c continue scrape/scraper.py
+    $ python -m pdb -c continue scrape/scraper.py
+
 """
 
 import csv
@@ -17,7 +19,6 @@ from sys import stderr, stdout
 from typing import Dict as DictType, List as ListType
 
 SRC_PATH = Path("docs/index.html")
-
 OUT_HEADER = (
     "agency",
     "last_name",
@@ -29,22 +30,20 @@ OUT_HEADER = (
     "full_name",
     "row_index",
 )
-TEAM_LEAD_TXT = ", Team Lead"  # this is in the name of the first person in each row
+TEAM_LEAD_TXT = (
+    ", Team Lead"  # this is boilerplate in the name of the first person in each table
+)
 
 
 def parse_page(html: str) -> ListType[DictType]:
+    """convert html text to a list of team member data"""
     data = []
-
     doc = hparse(html)
+
     for hed in doc.cssselect("h2"):
         agency = hed.text
         for i, row in enumerate(hed.getnext().cssselect("tbody tr"), 1):
             cells = row.cssselect("td")
-            # just making sure "Team Lead" appears only in the first row and nowhere else
-            # if (i == 1 and TEAM_LEAD_TXT not in cells[0].text) or (
-            #     i != 1 and "," in cells[0].text
-            # ):
-            #     raise ValueError("what the f")
 
             d = {
                 "agency": agency,
@@ -55,7 +54,7 @@ def parse_page(html: str) -> ListType[DictType]:
                 "row_index": i,
             }
 
-            # sloppy but whatever
+            # A very sloppy, lazily assuming name parsing script, but good enough for now...
             d["first_name"], d["middle_name"], *lname = d["full_name"].split(" ", 2)
             d["last_name"] = lname[0] if lname else d.pop("middle_name")
             data.append(d)
